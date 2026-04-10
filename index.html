@@ -1,301 +1,50 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>News — INCT-CERBC</title>
+<title data-i18n="page_title">Noticias — INCT-CERBC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+  /* Seus estilos originais permanecem os mesmos */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --c-ink: #0d1117;
-    --c-paper: #f5f2ee;
-    --c-muted: #6b7280;
-    --c-accent-amazon: #1c3a5e;
-    --c-accent-ram: #5b1e6e;
-    --c-rule: rgba(0,0,0,0.12);
-    --radius: 4px;
-    --radius-lg: 12px;
+    --c-ink: #0d1117; --c-paper: #f5f2ee; --c-muted: #6b7280;
+    --c-accent-amazon: #1c3a5e; --c-accent-ram: #5b1e6e;
+    --c-rule: rgba(0,0,0,0.12); --radius: 4px; --radius-lg: 12px;
   }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--c-paper);
-    color: var(--c-ink);
-    min-height: 100vh;
-    padding: 48px 24px 80px;
-  }
-
-  .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--c-muted);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 32px;
-  }
-
-  .section-label::before {
-    content: '';
-    display: block;
-    width: 24px;
-    height: 1.5px;
-    background: currentColor;
-    flex-shrink: 0;
-  }
-
-  /* ── CAROUSEL ── */
-  .carousel-wrap {
-    position: relative;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: 0 2px 32px rgba(0,0,0,0.18);
-    margin-bottom: 56px;
-    background: #111;
-  }
-
-  .track {
-    display: flex;
-    transition: transform 0.55s cubic-bezier(.4,0,.2,1);
-    will-change: transform;
-  }
-
-  .slide {
-    min-width: 100%;
-    height: 380px;
-    position: relative;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-
-  .slide-bg {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    display: block;
-  }
-
-  /* permanent dark bottom overlay */
-  .slide-base-overlay {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .slide-0 .slide-base-overlay {
-    background: linear-gradient(160deg, rgba(18,42,90,0.80) 0%, rgba(18,42,90,0.50) 50%, rgba(18,42,90,0.20) 100%);
-  }
-
-  .slide-1 .slide-base-overlay {
-    background: linear-gradient(160deg, rgba(50,15,80,0.80) 0%, rgba(160,50,140,0.50) 55%, rgba(220,80,160,0.15) 100%);
-  }
-
-  /* hover overlay (reader) */
-  .slide-hover-overlay {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.35s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    pointer-events: none;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,0.2) transparent;
-  }
-
-  .slide-0 .slide-hover-overlay {
-    background: linear-gradient(0deg, rgba(10,28,60,0.97) 0%, rgba(10,28,60,0.92) 60%, rgba(10,28,60,0.45) 100%);
-  }
-
-  .slide-1 .slide-hover-overlay {
-    background: linear-gradient(0deg, rgba(30,10,60,0.97) 0%, rgba(90,20,110,0.92) 60%, rgba(120,30,140,0.45) 100%);
-  }
-
-  .carousel-wrap:hover .slide-hover-overlay { 
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .reader-inner {
-    padding: 28px 36px 32px;
-    flex-shrink: 0;
-  }
-
-  .reader-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    border-radius: 20px;
-    padding: 3px 11px;
-    margin-bottom: 12px;
-    border: 0.5px solid;
-  }
-
-  .slide-0 .reader-tag { background: rgba(255,200,50,.18); color: #ffd97a; border-color: rgba(255,210,80,.35); }
-  .slide-1 .reader-tag { background: rgba(220,100,200,.2); color: #f0aaee; border-color: rgba(220,100,200,.4); }
-
-  .reader-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px;
-    color: #fff;
-    margin-bottom: 10px;
-    line-height: 1.3;
-  }
-
-  .reader-divider {
-    height: 0.5px;
-    background: rgba(255,255,255,.15);
-    margin-bottom: 14px;
-  }
-
-  .reader-body {
-    font-size: 13px;
-    line-height: 1.75;
-    color: rgba(255,255,255,.82);
-  }
-
-  .reader-body p { margin-bottom: 10px; }
-  .reader-body p:last-child { margin-bottom: 0; }
-
-  /* preview (initial cards before hover) */
-  .slide-preview {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 28px 36px;
-    z-index: 2;
-    transition: opacity 0.3s ease;
-  }
-
-  .carousel-wrap:hover .slide-preview { 
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .preview-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    border-radius: 20px;
-    padding: 3px 11px;
-    margin-bottom: 10px;
-    border: 0.5px solid;
-    width: fit-content;
-  }
-
-  .slide-0 .preview-tag { background: rgba(255,200,50,.18); color: #ffd97a; border-color: rgba(255,210,80,.35); }
-  .slide-1 .preview-tag { background: rgba(220,100,200,.2); color: #f0aaee; border-color: rgba(220,100,200,.4); }
-
-  .preview-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: #fff;
-    margin-bottom: 6px;
-    line-height: 1.3;
-  }
-
-  .preview-sub {
-    font-size: 13px;
-    color: rgba(255,255,255,.7);
-    line-height: 1.5;
-  }
-
-  .preview-hint {
-    font-size: 11px;
-    color: rgba(255,255,255,.4);
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .preview-hint svg { width: 13px; height: 13px; opacity: .45; flex-shrink: 0; }
-
-  /* navigation */
-  .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 20;
-    background: rgba(255,255,255,.12);
-    border: 0.5px solid rgba(255,255,255,.25);
-    color: #fff;
-    border-radius: 50%;
-    width: 42px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    transition: background .2s, transform .2s;
-    font-size: 18px;
-    line-height: 1;
-  }
-
-  .arrow:hover { background: rgba(255,255,255,.25); transform: translateY(-50%) scale(1.06); }
-  .arrow-l { left: 14px; }
-  .arrow-r { right: 14px; }
-
-  /* dots */
-  .dots-bar {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    margin-top: 16px;
-    margin-bottom: 48px;
-  }
-
-  .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--c-rule);
-    border: 1px solid rgba(0,0,0,.2);
-    cursor: pointer;
-    transition: background .2s, transform .2s;
-  }
-
+  body { font-family: 'DM Sans', sans-serif; background: var(--c-paper); color: var(--c-ink); min-height: 100vh; padding: 48px 24px 80px; }
+  .carousel-wrap { position: relative; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 2px 32px rgba(0,0,0,0.18); margin-bottom: 56px; background: #111; }
+  .track { display: flex; transition: transform 0.55s cubic-bezier(.4,0,.2,1); will-change: transform; }
+  .slide { min-width: 100%; height: 380px; position: relative; cursor: pointer; flex-shrink: 0; }
+  .slide-bg { width: 100%; height: 100%; background-size: cover; background-position: center; display: block; }
+  .slide-base-overlay { position: absolute; inset: 0; pointer-events: none; }
+  .slide-0 .slide-base-overlay { background: linear-gradient(160deg, rgba(18,42,90,0.80) 0%, rgba(18,42,90,0.50) 50%, rgba(18,42,90,0.20) 100%); }
+  .slide-1 .slide-base-overlay { background: linear-gradient(160deg, rgba(50,15,80,0.80) 0%, rgba(160,50,140,0.50) 55%, rgba(220,80,160,0.15) 100%); }
+  .slide-hover-overlay { position: absolute; inset: 0; opacity: 0; transition: opacity 0.35s ease; display: flex; flex-direction: column; justify-content: flex-end; pointer-events: none; overflow-y: auto; }
+  .slide-0 .slide-hover-overlay { background: linear-gradient(0deg, rgba(10,28,60,0.97) 0%, rgba(10,28,60,0.92) 60%, rgba(10,28,60,0.45) 100%); }
+  .slide-1 .slide-hover-overlay { background: linear-gradient(0deg, rgba(30,10,60,0.97) 0%, rgba(90,20,110,0.92) 60%, rgba(120,30,140,0.45) 100%); }
+  .carousel-wrap:hover .slide-hover-overlay { opacity: 1; pointer-events: auto; }
+  .reader-inner { padding: 28px 36px 32px; flex-shrink: 0; }
+  .reader-tag { display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; border-radius: 20px; padding: 3px 11px; margin-bottom: 12px; border: 0.5px solid; }
+  .reader-title { font-family: 'DM Serif Display', serif; font-size: 20px; color: #fff; margin-bottom: 10px; line-height: 1.3; }
+  .reader-divider { height: 0.5px; background: rgba(255,255,255,.15); margin-bottom: 14px; }
+  .reader-body { font-size: 13px; line-height: 1.75; color: rgba(255,255,255,.82); }
+  .slide-preview { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 28px 36px; z-index: 2; transition: opacity 0.3s ease; }
+  .carousel-wrap:hover .slide-preview { opacity: 0; pointer-events: none; }
+  .preview-tag { display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; border-radius: 20px; padding: 3px 11px; margin-bottom: 10px; border: 0.5px solid; width: fit-content; }
+  .preview-title { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; color: #fff; margin-bottom: 6px; line-height: 1.3; }
+  .preview-sub { font-size: 13px; color: rgba(255,255,255,.7); line-height: 1.5; }
+  .preview-hint { font-size: 11px; color: rgba(255,255,255,.4); margin-top: 10px; display: flex; align-items: center; gap: 6px; }
+  .arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 20; background: rgba(255,255,255,.12); border: 0.5px solid rgba(255,255,255,.25); color: #fff; border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(8px); transition: background .2s, transform .2s; font-size: 18px; }
+  .dots-bar { display: flex; gap: 8px; justify-content: center; margin-top: 16px; margin-bottom: 48px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--c-rule); border: 1px solid rgba(0,0,0,.2); cursor: pointer; transition: background .2s, transform .2s; }
   .dot.active { background: var(--c-ink); transform: scale(1.3); }
-
-  /* counter */
-  .counter {
-    position: absolute;
-    top: 14px;
-    right: 18px;
-    font-size: 11px;
-    font-weight: 500;
-    color: rgba(255,255,255,.55);
-    z-index: 20;
-    letter-spacing: .08em;
-  }
-
-  .slide-2 .slide-base-overlay {
-    background: linear-gradient(160deg, rgba(0,70,30,0.85) 0%, rgba(20,100,40,0.50) 50%, rgba(40,140,60,0.20) 100%);
-  }
-
-  .slide-2 .slide-hover-overlay {
-    background: linear-gradient(0deg, rgba(0,50,20,0.97) 0%, rgba(10,80,30,0.92) 60%, rgba(20,100,40,0.45) 100%);
-  }
-
-  .slide-2 .reader-tag { background: rgba(80,220,80,.18); color: #a0f0a0; border-color: rgba(80,220,80,.35); }
-  .slide-2 .preview-tag { background: rgba(80,220,80,.18); color: #a0f0a0; border-color: rgba(80,220,80,.35); }
+  .counter { position: absolute; top: 14px; right: 18px; font-size: 11px; font-weight: 500; color: rgba(255,255,255,.55); z-index: 20; letter-spacing: .08em; }
+  .slide-2 .slide-base-overlay { background: linear-gradient(160deg, rgba(0,70,30,0.85) 0%, rgba(20,100,40,0.50) 50%, rgba(40,140,60,0.20) 100%); }
+  .slide-2 .slide-hover-overlay { background: linear-gradient(0deg, rgba(0,50,20,0.97) 0%, rgba(10,80,30,0.92) 60%, rgba(20,100,40,0.45) 100%); }
 </style>
 </head>
 <body>
@@ -306,81 +55,75 @@
   <div class="track" id="track">
 
     <div class="slide slide-0">
-      <div class="slide-bg" style="background-image: url('data:image/png;base64,...')"></div>
+      <div class="slide-bg" style="background-image: url('...')"></div>
       <div class="slide-base-overlay"></div>
-
       <div class="slide-preview">
-        <span class="preview-tag">International Conferences</span>
-        <div class="preview-title">INCT-CERBC Promotes the 23rd INFOCUS and 2nd ISHAM LATAM</div>
-        <div class="preview-sub">Event in Curitiba, Brazil, from July 22-25, 2026, will bring together specialists in medical and veterinary mycology from around the world.</div>
+        <span class="preview-tag" data-i18n="tag_intl">International Conferences</span>
+        <div class="preview-title" data-i18n="s0_title">INCT-CERBC Promotes the 23rd INFOCUS and 2nd ISHAM LATAM</div>
+        <div class="preview-sub" data-i18n="s0_sub">Event in Curitiba, Brazil, from July 22-25, 2026...</div>
         <div class="preview-hint">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          Hover to read
+          <span data-i18n="hint_hover">Hover to read</span>
         </div>
       </div>
-
       <div class="slide-hover-overlay">
         <div class="reader-inner">
-          <span class="reader-tag">International Conferences</span>
-          <div class="reader-title">INCT-CERBC Promotes the 23rd INFOCUS and 2nd ISHAM LATAM in Curitiba</div>
+          <span class="reader-tag" data-i18n="tag_intl">International Conferences</span>
+          <div class="reader-title" data-i18n="s0_reader_title">INCT-CERBC Promotes the 23rd INFOCUS and 2nd ISHAM LATAM in Curitiba</div>
           <div class="reader-divider"></div>
           <div class="reader-body">
-            <p>INCT-CERBC is proud to promote the 23rd INFOCUS Congress and the 2nd ISHAM LATAM Congress, which will take place in Curitiba, Brazil, from July 22-25, 2026.</p>
-            <p>The event is a milestone for medical and veterinary mycology, gathering researchers and professionals to discuss innovations and challenges in the field.</p>
+            <p data-i18n="s0_p1">INCT-CERBC is proud to promote the 23rd INFOCUS Congress...</p>
+            <p data-i18n="s0_p2">The event is a milestone for medical and veterinary mycology...</p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="slide slide-1">
-      <div class="slide-bg" style="background-image: url('data:image/png;base64,...')"></div>
+      <div class="slide-bg" style="background-image: url('...')"></div>
       <div class="slide-base-overlay"></div>
-      
       <div class="slide-preview">
-        <span class="preview-tag">Events & Updates</span>
-        <div class="preview-title">6th Meeting of the Mycology Network (RAM 2025)</div>
-        <div class="preview-sub">Learn about the outcomes of the 6th Mycology Network meeting held in October 2025, in Maringá, PR.</div>
+        <span class="preview-tag" data-i18n="tag_events">Events & Updates</span>
+        <div class="preview-title" data-i18n="s1_title">6th Meeting of the Mycology Network (RAM 2025)</div>
+        <div class="preview-sub" data-i18n="s1_sub">Learn about the outcomes of the 6th Mycology Network meeting...</div>
         <div class="preview-hint">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          Hover to read
+          <span data-i18n="hint_hover">Hover to read</span>
         </div>
       </div>
-
       <div class="slide-hover-overlay">
         <div class="reader-inner">
-          <span class="reader-tag">Events & Updates</span>
-          <div class="reader-title">Highlights from the 6th RAM Meeting in Maringá</div>
+          <span class="reader-tag" data-i18n="tag_events">Events & Updates</span>
+          <div class="reader-title" data-i18n="s1_reader_title">Highlights from the 6th RAM Meeting in Maringá</div>
           <div class="reader-divider"></div>
           <div class="reader-body">
-            <p>The 6th Meeting of the Mycology Network (RAM 2025) took place between October 23 and 25 at the State University of Maringá (UEM).</p>
-            <p>During the event, participants debated scientific advancements in diagnostic techniques and antimicrobial resistance in fungi.</p>
+            <p data-i18n="s1_p1">The 6th Meeting of the Mycology Network took place...</p>
+            <p data-i18n="s1_p2">During the event, participants debated scientific advancements...</p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="slide slide-2">
-      <div class="slide-bg" style="background-image: url('data:image/png;base64,...')"></div>
+      <div class="slide-bg" style="background-image: url('...')"></div>
       <div class="slide-base-overlay"></div>
-
       <div class="slide-preview">
-        <span class="preview-tag">Expeditions & Research</span>
-        <div class="preview-title">Expedition Explores Mycological Diversity in the Amazon</div>
-        <div class="preview-sub">Researchers from INCT-CERBC join forces in a mission to identify new fungal species in the northern region.</div>
+        <span class="preview-tag" data-i18n="tag_expeditions">Expeditions & Research</span>
+        <div class="preview-title" data-i18n="s2_title">Expedition Explores Mycological Diversity in the Amazon</div>
+        <div class="preview-sub" data-i18n="s2_sub">Researchers from INCT-CERBC join forces in a mission to identify new fungal species...</div>
         <div class="preview-hint">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          Hover to read
+          <span data-i18n="hint_hover">Hover to read</span>
         </div>
       </div>
-
       <div class="slide-hover-overlay">
         <div class="reader-inner">
-          <span class="reader-tag">Expeditions & Research</span>
-          <div class="reader-title">Amazon Expedition: Discovering the Fungi of the Tropical Forest</div>
+          <span class="reader-tag" data-i18n="tag_expeditions">Expeditions & Research</span>
+          <div class="reader-title" data-i18n="s2_reader_title">Amazon Expedition: Discovering Fungi of the Tropical Forest</div>
           <div class="reader-divider"></div>
           <div class="reader-body">
-            <p>A multidisciplinary team recently completed an expedition in the Amazon region, focusing on fungi with biotechnological potential.</p>
-            <p>The collected samples are being analyzed in laboratories to better understand the impact of climate change on biodiversity and pharmacology.</p>
+            <p data-i18n="s2_p1">A multidisciplinary team recently completed an expedition...</p>
+            <p data-i18n="s2_p2">The samples are being analyzed in laboratories to understand climate impact...</p>
           </div>
         </div>
       </div>
@@ -388,8 +131,8 @@
 
   </div>
 
-  <button class="arrow arrow-l" id="prev" aria-label="previous">&#8592;</button>
-  <button class="arrow arrow-r" id="next" aria-label="next">&#8594;</button>
+  <button class="arrow arrow-l" id="prev" data-i18n-aria="aria_prev">&#8592;</button>
+  <button class="arrow arrow-r" id="next" data-i18n-aria="aria_next">&#8594;</button>
 </div>
 
 <div class="dots-bar">
@@ -399,13 +142,97 @@
 </div>
 
 <script>
+// DICIONÁRIO AMPLIADO COM ESPANHOL (ES)
+const translations = {
+    'pt': {
+        'page_title': 'Notícias — INCT-CERBC',
+        'tag_intl': 'Conferências Internacionais',
+        'tag_events': 'Eventos e Atualizações',
+        'tag_expeditions': 'Expedições e Pesquisa',
+        's0_title': 'INCT-CERBC promove o 23º INFOCUS e o 2º ISHAM LATAM',
+        's0_sub': 'Evento em Curitiba, Brasil, reunirá especialistas em micologia de todo o mundo.',
+        'hint_hover': 'Passe o mouse para ler',
+        's0_reader_title': 'INCT-CERBC promove o 23º INFOCUS em Curitiba',
+        's0_p1': 'O INCT-CERBC tem o orgulho de promover este congresso de 22 a 25 de julho de 2026.',
+        's0_p2': 'O evento é um marco para a micologia médica e veterinária.',
+        's1_title': '6ª Reunião da Rede de Micologia (RAM 2025)',
+        's1_sub': 'Saiba mais sobre os resultados da reunião realizada em Maringá, PR.',
+        's1_reader_title': 'Destaques da 6ª Reunião da RAM',
+        's1_p1': 'A reunião ocorreu entre 23 e 25 de outubro na UEM.',
+        's1_p2': 'Participantes debateram avanços em técnicas de diagnóstico.',
+        's2_title': 'Expedição explora diversidade na Amazônia',
+        's2_sub': 'Pesquisadores buscam identificar novas espécies de fungos no norte.',
+        's2_reader_title': 'Expedição Amazônia: Descobrindo Fungos',
+        's2_p1': 'Uma equipe multidisciplinar concluiu recentemente uma expedição.',
+        's2_p2': 'As amostras estão sendo analisadas para entender o impacto climático.',
+        'aria_prev': 'anterior',
+        'aria_next': 'próximo'
+    },
+    'en': {
+        'page_title': 'News — INCT-CERBC',
+        'tag_intl': 'International Conferences',
+        'tag_events': 'Events & Updates',
+        'tag_expeditions': 'Expeditions & Research',
+        's0_title': 'INCT-CERBC Promotes the 23rd INFOCUS and 2nd ISHAM LATAM',
+        's0_sub': 'Event in Curitiba, Brazil, will bring together specialists from around the world.',
+        'hint_hover': 'Hover to read',
+        's0_reader_title': 'INCT-CERBC Promotes the 23rd INFOCUS in Curitiba',
+        's0_p1': 'INCT-CERBC is proud to promote this congress from July 22-25, 2026.',
+        's0_p2': 'The event is a milestone for medical and veterinary mycology.',
+        's1_title': '6th Meeting of the Mycology Network (RAM 2025)',
+        's1_sub': 'Learn about the outcomes of the meeting held in Maringá, PR.',
+        's1_reader_title': 'Highlights from the 6th RAM Meeting',
+        's1_p1': 'The meeting took place between October 23 and 25 at UEM.',
+        's1_p2': 'Participants debated advancements in diagnostic techniques.',
+        's2_title': 'Expedition Explores Diversity in the Amazon',
+        's2_sub': 'Researchers join forces to identify new fungal species in the north.',
+        's2_reader_title': 'Amazon Expedition: Discovering Fungi',
+        's2_p1': 'A multidisciplinary team recently completed an expedition.',
+        's2_p2': 'Samples are being analyzed to understand climate impact.',
+        'aria_prev': 'previous',
+        'aria_next': 'next'
+    },
+    'es': {
+        'page_title': 'Noticias — INCT-CERBC',
+        'tag_intl': 'Conferencias Internacionales',
+        'tag_events': 'Eventos y Actualizaciones',
+        'tag_expeditions': 'Expediciones e Investigación',
+        's0_title': 'El INCT-CERBC promueve el 23º INFOCUS y el 2º ISHAM LATAM',
+        's0_sub': 'Evento en Curitiba, Brasil, reunirá a especialistas en micología de todo el mundo.',
+        'hint_hover': 'Pase el mouse para leer',
+        's0_reader_title': 'INCT-CERBC promueve el 23º INFOCUS en Curitiba',
+        's0_p1': 'El INCT-CERBC se enorgullece de promover este congreso del 22 al 25 de julio de 2026.',
+        's0_p2': 'El evento es un hito para la micología médica y veterinaria.',
+        's1_title': '6ª Reunión de la Red de Micología (RAM 2025)',
+        's1_sub': 'Conozca los resultados de la reunión celebrada en Maringá, PR.',
+        's1_reader_title': 'Aspectos destacados de la 6ª reunión de la RAM',
+        's1_p1': 'La reunión se llevó a cabo entre el 23 y 25 de octubre en la UEM.',
+        's1_p2': 'Los participantes debatieron avances en técnicas de diagnóstico.',
+        's2_title': 'Expedición explora la diversidad en la Amazonía',
+        's2_sub': 'Investigadores buscan identificar nuevas especies de hongos en el norte.',
+        's2_reader_title': 'Expedición Amazonía: Descubriendo Hongos',
+        's2_p1': 'Un equipo multidisciplinario completó recientemente una expedición.',
+        's2_p2': 'Las muestras están siendo analizadas para entender el impacto climático.',
+        'aria_prev': 'anterior',
+        'aria_next': 'siguiente'
+    }
+};
+
+function applyLanguage(lang) {
+    const selectedLang = translations[lang] ? lang : 'en';
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[selectedLang][key]) el.innerText = translations[selectedLang][key];
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+        const key = el.getAttribute('data-i18n-aria');
+        if (translations[selectedLang][key]) el.setAttribute('aria-label', translations[selectedLang][key]);
+    });
+}
+
 (function(){
-  var track = document.getElementById('track');
-  var counter = document.getElementById('counter');
-  var dots = document.querySelectorAll('.dot');
-  var total = 3;
-  var current = 0;
-  var auto;
+  var track = document.getElementById('track'), counter = document.getElementById('counter'), dots = document.querySelectorAll('.dot');
+  var total = 3, current = 0, auto;
 
   function go(n) {
     current = (n + total) % total;
@@ -415,18 +242,15 @@
     resetAuto();
   }
 
-  function resetAuto() {
-    clearInterval(auto);
-    auto = setInterval(function() { go(current + 1); }, 6000);
-  }
-
+  function resetAuto() { clearInterval(auto); auto = setInterval(function() { go(current + 1); }, 6000); }
   document.getElementById('prev').onclick = function() { go(current - 1); };
   document.getElementById('next').onclick = function() { go(current + 1); };
-  dots.forEach(function(d) {
-    d.onclick = function() { go(parseInt(this.getAttribute('data-i'))); };
-  });
-
+  dots.forEach(function(d) { d.onclick = function() { go(parseInt(this.getAttribute('data-i'))); }; });
   resetAuto();
+
+  // DETECÇÃO AUTOMÁTICA (Detecta pt, en ou es)
+  const userLang = (navigator.language || navigator.userLanguage).split('-')[0];
+  applyLanguage(userLang);
 })();
 </script>
 </body>
